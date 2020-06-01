@@ -39,9 +39,7 @@ You can select the directory that the download will go to. The application remem
   
 ![](images/git%205.png)  
     
-    
-### Download or watch video
-Click the video you want to download or watch it first to be sure it's the one.
+
 
 
 
