@@ -3,6 +3,8 @@
 Tkinter app that downloads videos from youtube. 
 Formats supported: webm, mp4, mkv, mp3 and wav
 
+![](images/github.png)
+
 ## How run this app  
 
 1. You need python installed on your computer  
