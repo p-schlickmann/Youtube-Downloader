@@ -1,40 +1,57 @@
 from __future__ import unicode_literals
-import os
-from time import sleep
 import youtube_dl
 from youtube_search import YoutubeSearch
 
 
-def download_video(_id):
-    ydl_opts = {
+def youtube_download(_id, selected_dir, user_format):
+    mp3 = {
         'format': 'bestaudio/best',
-        'outtmpl': f'/songs/{_id}%(title)s.%(ext)s',
+        'outtmpl': f'{selected_dir}/%(title)s.%(ext)s',
         'postprocessors': [{
             'key': 'FFmpegExtractAudio',
             'preferredcodec': 'mp3',
-            'preferredquality': '192',
-        }]
+            'preferredquality': '192', }]
+        }
+    mp4 = {
+        'format': 'bestvideo[ext=mkv]+bestaudio/best',
+        'outtmpl': f'{selected_dir}/%(title)s.%(ext)s',
     }
-    with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-        ydl.download([f'https://www.youtube.com/watch?v={_id}'])
-    sleep(1)
+    webm = {
+        'format': 'bestvideo[ext=webm]+bestaudio',
+        'outtmpl': f'{selected_dir}/%(title)s.%(ext)s'
+    }
+    wav = {
+        'format': 'bestaudio/best',
+        'outtmpl':  f'{selected_dir}/%(title)s.%(ext)s',
+        'postprocessors': [{
+            'key': 'FFmpegExtractAudio',
+            'preferredcodec': 'wav',
+            'preferredquality': '192', }]
+    }
+    mkv = {
+        'format': 'bestvideo[ext=mp4]+bestaudio',
+        'outtmpl': f'{selected_dir}/%(title)s.%(ext)s',
+        'merge_output_format': 'mkv'
+        }
 
-    songs = os.listdir('./songs/')
-    song = [song for song in songs if song.startswith(_id)]
-    old_song_name = song[0]
-    new_song_name = old_song_name.replace(_id, '')
+    options = {'mp3': mp3, 'mp4': mp4, 'webm': webm, 'wav': wav, 'mkv': mkv}
+    ydl_opts = options.get(user_format)
 
     try:
-        os.rename(f'./songs/{old_song_name}', f'./songs/{new_song_name}')
-    except FileExistsError:
-        os.remove(f'./songs/{old_song_name}')
-
-    return f'{new_song_name} downloaded successfully'
+        with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+            ydl.download([f'https://www.youtube.com/watch?v={_id}'])
+    except:
+        return False
+    else:
+        return True
 
 
 def yt_search(video_name):
     search = YoutubeSearch(video_name, max_results=10).to_dict()
     if search:
-        return search
-    return False
-
+        for result in search:
+            if result['id'] in video_name or result['link'] in video_name:
+                search = YoutubeSearch(video_name, max_results=1).to_dict()
+                return search, True
+        return search, False
+    return False, False
