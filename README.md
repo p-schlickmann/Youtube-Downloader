@@ -38,9 +38,4 @@ You can specify the file format you want, .webm is default
 You can select the directory that the download will go to. The application remembers your last choice, even if you close it.  
   
 ![](images/git2.png)
-![](images/git%205.png)  
-    
-
-
-
-
+   
