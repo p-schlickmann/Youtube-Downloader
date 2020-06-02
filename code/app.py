@@ -7,7 +7,7 @@ from main_functions import youtube_download, yt_search
 
 root = tk.Tk()
 root.title('YOUTUBE DOWNLOADER')
-root.geometry("710x515")
+root.geometry("710x520")
 
 user_search = tk.StringVar()
 user_format_option = tk.StringVar()
@@ -46,11 +46,6 @@ def check_conditions():
     _, searched_link = yt_search(user_search.get())
     search_by_name = set_search_option()
 
-    if search_by_name == 'select a searching option!':
-        error_widget = ttk.Label(root, text='select a searching option!', padding=3)
-        error_widget.grid(row=1, column=1, ipady=7, ipadx=11, padx=3, pady=2, columnspan=3)
-        previous_bottom_widgets.append(error_widget)
-        return False
     if searched_link and search_by_name:
         error_widget = ttk.Label(root, text='you used a link while searching by name', padding=3)
         error_widget.grid(row=1, column=1, ipady=7, ipadx=11, padx=3, pady=2, columnspan=3)
@@ -108,7 +103,7 @@ def set_directory():
             return path.get()
         else:  # if not, set to root
             path = tk.StringVar()
-            path.set('./songs')
+            path.set('./')
             return path.get()
 
 
@@ -121,14 +116,12 @@ def set_file_format():
 
 
 def set_search_option():
-    if link_or_name.get() == 'Search by...':
-        return 'select a searching option!'
-    elif link_or_name.get() == 'Video Name':
+    if link_or_name.get() == 'Video Name':
         return True
     return False
 
 
-search_options = ttk.OptionMenu(root, link_or_name, 'Search by...', 'Video Name', 'Video Link')
+search_options = ttk.OptionMenu(root, link_or_name, 'Video Name', 'Video Name', 'Video Link')
 search_options.grid(row=0, column=0, ipady=5, padx=9, pady=3)
 search_options.config(width=11)
 
@@ -139,12 +132,11 @@ root.bind('<Return>', show_results)
 
 ttk.Button(root, text='Search', width=16, command=lambda: show_results('')).grid(row=0, column=2, ipady=5, padx=9, pady=3)
 
-format_options = ttk.OptionMenu(root, user_format_option, 'Select format...', 'webm', 'mp4', 'mkv', '---------', 'mp3', 'wav')
+format_options = ttk.OptionMenu(root, user_format_option, 'Select format...', 'webm', 'mp4', 'mkv', 'mp3', 'wav')
 format_options.grid(row=0, column=3, ipady=5, padx=7, pady=3)
 format_options.config(width=13)
 
 ttk.Button(root, text='Downloads directory', width=19, command=browse_directory).grid(row=0, column=4, ipady=5, padx=9, pady=3)
 
 
-root.mainloop()   
-   
+root.mainloop()
