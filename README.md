@@ -12,8 +12,8 @@ Formats supported: webm, mp4, mkv, mp3 and wav
 3. Install the required libraries specified in the requirements.txt file
 4. Install [ffmpeg](https://www.youtube.com/watch?v=XMvCuCe3LNE) on your computer    
 5. Open your **terminal** (MacOS, Linux) or **cmd** (Windows), navigate to the project folder and run:  
-`pipenv run python app.py` if using pipenv   
-or `python app.py` if using default venv  
+`pipenv run python app.py` if using pipenv or   
+`python app.py` if using default venv  
   
 ## App Functionalities  
   
