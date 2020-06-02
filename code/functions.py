@@ -18,7 +18,7 @@ def youtube_download(_id, selected_dir, user_format):
     }
     webm = {
         'format': 'bestvideo[ext=webm]+bestaudio',
-        'outtmpl': f'{selected_dir}/.%(title)s.%(ext)s'
+        'outtmpl': f'{selected_dir}/%(title)s_.%(ext)s'
     }
     wav = {
         'format': 'bestaudio/best',
